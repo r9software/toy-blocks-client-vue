@@ -8,6 +8,7 @@
             name: item.name,
             online: item.online,
             url: item.url,
+            blocks:item.blocks,
             loading: item.loading,
           }"
           />

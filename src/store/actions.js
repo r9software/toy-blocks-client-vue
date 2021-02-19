@@ -17,4 +17,20 @@ export const actions = {
       }
     }
   },
+  async getAllBlocksForNode({commit},node) {
+      try {
+        const res = await fetch(`${node.url}/api/v1/blocks`);
+        const response = await res.json();
+        const params = {
+          el: node,
+          blocks:response.data
+        };
+        console.log(params)
+        await commit('nodeBlocksResponseSuccess', params);
+      }
+      catch (e) {
+        await commit('nodeBlocksResponseFailure', {el: node});
+      }
+  },
+
 }

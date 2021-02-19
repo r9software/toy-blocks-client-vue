@@ -18,25 +18,46 @@
         </v-badge> 
       </div>
     </v-expansion-panel-header>
-    <v-expansion-panel-content>
-      <span>Here goes the content</span>
-    </v-expansion-panel-content>
+    <v-expansion-panel-content class="expansion-container">
+      <template v-if="node.loading">
+        Loading...
+      </template>
+      <template v-else-if="!node.online">
+        Node is offline
+      </template>
+      <template v-else-if="node.blocks.length > 0">
+        <block v-for="block in node.blocks" :key="block.id" :block="block"></block>
+      </template>
+      <template v-else>
+        This node does not contain blocks
+      </template>
+      </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
 
 <script>
+import Block from "@/components/Block";
+import {mapActions} from "vuex";
 export default {
   name: 'node',
+  components: {Block},
   props: {
     node: {
       url: String,
       online: Boolean,
       name: String,
       loading: Boolean,
+      blocks:[],
     }
   },
   data: () => ({
   }),
+  watch:{
+    node:async function(node,pastNode){
+      if(typeof node !=='undefined' && node.online && !pastNode.online)
+        await this.getAllBlocksForNode(node);
+    }
+  },
   computed: {
     getColor() {
       let badgeColor = '#Eb5757';
@@ -58,11 +79,19 @@ export default {
       }
       return statusText;
     }
-  }
+  },
+  methods: {
+    ...mapActions(['getAllBlocksForNode']),
+  },
 }
 </script>
 
 <style scoped>
+  .expansion-container >>> .v-expansion-panel-content__wrap{
+    padding-left:16px;
+    padding-right:16px;
+
+  }
   .accordion-badge {
     margin-left: auto;
     margin-right: 12px;

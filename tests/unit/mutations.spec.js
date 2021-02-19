@@ -5,7 +5,9 @@ describe('Store Mutations', () => {
   const { 
     checkNodeStatusStart, 
     checkNodeStatusSuccess, 
-    checkNodeStatusFailure 
+    checkNodeStatusFailure,
+    nodeBlocksResponseFailure,
+    nodeBlocksResponseSuccess,
     } = mutations; 
 
   const initState = initialState();
@@ -32,4 +34,24 @@ describe('Store Mutations', () => {
     expect(initState.nodes.list[0].loading).toEqual(false);
     expect(initState.nodes.list[0].online).toEqual(false);
   });
+
+
+  it('nodeBlocksResponseSuccess', () => {
+    const params = {
+      el: {
+        url: initState.nodes.list[0].url
+      },
+      blocks:[{attributes:{index:0,data:"simple-text"}}]
+    }
+    nodeBlocksResponseSuccess(initState, params);
+    expect(initState.nodes.list[0].blocks).toEqual(params.blocks);
+  });
+  it('nodeBlocksResponseFailure', () => {
+    //changing initial value so it is reflected on test
+    initState.nodes.list[0].blocks= undefined
+    nodeBlocksResponseFailure(initState, { el: initState.nodes.list[0] });
+    expect(initState.nodes.list[0].blocks).toEqual([]);
+  });
+
+
 });

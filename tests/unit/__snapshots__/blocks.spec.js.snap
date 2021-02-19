@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Block /> match the snapshot 1`] = `
+<v-expansion-panel-stub class="accordion-node">
+  <v-expansion-panel-header-stub expandicon="$expand">
+    <div class="d-flex">
+      <div class="d-flex flex-column"><span class="accordion-header-name">sample-node</span> <span class="accordion-header-url"></span></div>
+      <v-badge-stub color="#18cc55" left="true" value="true" transition="scale-rotate-transition" bordered="true" dot="true" label="$vuetify.badge" inline="true" class="accordion-badge"><span class="text-uppercase accordion-status-text">Online</span></v-badge-stub>
+    </div>
+  </v-expansion-panel-header-stub>
+  <v-expansion-panel-content-stub class="expansion-container">
+    <block-stub block="[object Object]"></block-stub>
+  </v-expansion-panel-content-stub>
+</v-expansion-panel-stub>
+`;
